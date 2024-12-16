@@ -109,7 +109,6 @@
     $(function () {
         responsiveMenu();
         menuCanvas();
-
     });
 
 })(jQuery);
@@ -228,40 +227,31 @@ $(function () {
             tTime.text('00:00');
         else
             tTime.text(durMinutes + ':' + durSeconds);
-        if (isNaN(curMinutes) || isNaN(curSeconds) || isNaN(durMinutes) || isNaN(durSeconds))
-            trackTime.removeClass('active');
-        else
-            trackTime.addClass('active');
         seekBar.width(playProgress + '%');
-        if (playProgress == 100) {
-            i.attr('class', 'fa fa-play');
-            seekBar.width(0);
-            tProgress.text('00:00');
-            albumArt.removeClass('buffering').removeClass('active');
-            clearInterval(buffInterval);
-        }
     }
 
     function checkBuffering() {
         clearInterval(buffInterval);
         buffInterval = setInterval(function () {
-            if ((nTime == 0) || (bTime - nTime) > 1000)
+            if (nTime - bTime >= 1000) {
                 albumArt.addClass('buffering');
-            else
-                albumArt.removeClass('buffering');
-            bTime = new Date();
-            bTime = bTime.getTime();
-        }, 100);
+                playerTrack.addClass('buffering');
+            }
+        }, 1000);
     }
 
     function selectTrack(flag) {
-        if (flag == 0 || flag == 1)
-            ++currIndex;
-        else
-            --currIndex;
-        if ((currIndex > -1) && (currIndex < albumArtworks.length)) {
-            if (flag == 0)
-                i.attr('class', 'fa fa-play');
+        if (flag === 0 || flag === 1) ++currIndex;
+        else --currIndex;
+
+        // Loop back to the start if we reach the end
+        if (currIndex >= albumArtworks.length) currIndex = 0;
+
+        // Prevent index from going below 0
+        if (currIndex < 0) currIndex = albumArtworks.length - 1;
+
+        if (currIndex > -1 && currIndex < albumArtworks.length) {
+            if (flag === 0) i.attr('class', 'fa fa-play');
             else {
                 albumArt.removeClass('buffering');
                 i.attr('class', 'fa fa-pause');
@@ -275,9 +265,8 @@ $(function () {
             currArtwork = albumArtworks[currIndex];
             audio.src = trackUrl[currIndex];
             nTime = 0;
-            bTime = new Date();
-            bTime = bTime.getTime();
-            if (flag != 0) {
+            bTime = new Date().getTime();
+            if (flag !== 0) {
                 audio.play();
                 playerTrack.addClass('active');
                 albumArt.addClass('active');
@@ -293,10 +282,8 @@ $(function () {
                 'background-image': 'url(' + bgArtworkUrl + ')'
             });
         } else {
-            if (flag == 0 || flag == 1)
-                --currIndex;
-            else
-                ++currIndex;
+            if (flag === 0 || flag === 1) --currIndex;
+            else ++currIndex;
         }
     }
 
@@ -304,18 +291,31 @@ $(function () {
         audio = new Audio();
         selectTrack(0);
         audio.loop = false;
+
+        // Play/Pause functionality
         playPauseButton.on('click', playPause);
+
+        // Update hover and seek bar
         sArea.mousemove(function (event) {
             showHover(event);
         });
         sArea.mouseout(hideHover);
         sArea.on('click', playFromClickedPos);
+
+        // Update current time during playback
         $(audio).on('timeupdate', updateCurrTime);
+
+        // Navigate to previous or next track
         playPreviousTrackButton.on('click', function () {
             selectTrack(-1);
         });
         playNextTrackButton.on('click', function () {
             selectTrack(1);
+        });
+
+        // Automatically play the next track when the current track ends
+        $(audio).on('ended', function () {
+            selectTrack(1); // Go to the next track
         });
     }
 
