@@ -136,9 +136,9 @@ $(function () {
     var playerTrack = $("#player-track"), bgArtwork = $('#bg-artwork'), bgArtworkUrl, albumName = $('#album-name'), trackName = $('#track-name'), albumArt = $('#album-art'), sArea = $('#s-area'),
         seekBar = $('#seek-bar'), trackTime = $('#track-time'), insTime = $('#ins-time'), sHover = $('#s-hover'), playPauseButton = $("#play-pause-button"), i = playPauseButton.find('i'),
         tProgress = $('#current-time'), tTime = $('#track-length'), seekT, seekLoc, seekBarPos, cM, ctMinutes, ctSeconds, curMinutes, curSeconds, durMinutes, durSeconds, playProgress, bTime,
-        nTime = 0, buffInterval = null, tFlag = false, albums = ['Setareh', 'Alamat soal', 'Vaghti ke bad misham', 'Breaking me', 'Why am I so in love'],
-        trackNames = ['Shadmehr Aghili', 'Shadmehr Aghili', 'Shadmehr Aghili', 'Topic', 'XXXTENTACION'], albumArtworks = ['_1', '_2', '_3', '_4', '_5'],
-        trackUrl = ['https://dl.nitmusic.com/1399/02/Shadmehr%20Aghili%20-%20Setareh.mp3', 'https://dl.aharmusic.ir/98/4/19/Shadmehr%20Aghili%20-%20Alamate%20Soal.mp3', 'https://dl.nex1.ir/5/Shadmehr-Aghili_Vaghti-Ke-Bad-Misham.mp3', 'https://dl.baarzesh.net/music/2020/7/Topic_Breaking_Me_Remix_128.mp3', 'https://dl.baarzesh.net/music/2020/10/XXXTENTACION_the_remedy_for_a_broken_heart_320.mp3'],
+        nTime = 0, buffInterval = null, tFlag = false, albums = ['Man Of Colors', 'Man Of Colors', 'The Combine Harvester', 'Whenever You Need Somebody', 'Doo-Wops & Hooligans'],
+        trackNames = ['Crazy - Icehouse', 'Electric Blue - Icehouse', 'Combine Harvester - The Wurzels', 'The Classic Rick', 'Lazy Song - Bruno Mars'], albumArtworks = ['_1', '_2', '_3', '_4', '_5'],
+        trackUrl = ['https://salty.cool/assets/crazy.mp3', 'https://salty.cool/assets/blues.mp3', 'https://salty.cool/assets/combine.mp3', 'https://salty.cool/assets/rick.mp3', 'https://salty.cool/assets/lazy.mp3'],
         playPreviousTrackButton = $('#play-previous'), playNextTrackButton = $('#play-next'), currIndex = -1;
 
     function playPause() {
