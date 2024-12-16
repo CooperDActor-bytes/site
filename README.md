@@ -15,4 +15,4 @@
 
 ## see it live
 
-(https://salty.cool/)[live]
+[https://salty.cool/](live)
